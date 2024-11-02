@@ -1,0 +1,255 @@
+header {
+    height: 180px;
+    width: 1200px;
+    margin: auto;
+    padding: auto;
+}
+
+#sections {
+    position: relative;
+    left: 1000px;
+    top: 10px;
+    width: 200px;
+    font-family: sans-serif;
+}
+
+#sections button {
+    background-color: #fff;
+    border: none;
+    border-radius: 5px;
+    width: 31%;
+    height: 100%;
+    font-size: 10px;
+    color: #312470;
+    font-weight: 700;
+    padding-top: 5px;
+}
+
+#sections button:active {
+    background-color: #cecae1;
+}
+
+#types-sell {
+    position: relative;
+    left: 0px;
+    top: 50px;
+    border: 2px solid #9894a9;
+    background-color: #eceaf3;
+    width: 280px;
+    height: 40px; 
+    border-radius: 10px;
+}
+
+#types-sell button {
+    height: 100%;
+    border: none;
+    border-radius: 10px;
+    background-color: #eceaf3;
+    color:#9894a9;
+    font-weight: 700;   
+}
+
+#types-sell button:active {
+    color: #312470;
+}
+
+#search {
+    position: relative;
+    left: 980px;
+    top: 40px;
+    height: 34px;
+    width: 245px;
+    background-color: #fff;
+    border-radius: 10px;
+    border: 2px solid #eceaf3;
+}
+
+#search input {
+    position: relative;
+    top: -50px;
+    height: 30px;
+    width: 183px;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+    padding-left: 10px;
+}
+
+#search button {
+    height: 34px;
+    width: 45px;
+    background-color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 10px;
+}
+
+#search button:active {
+    background-color: #eceaf3;
+}
+
+main {
+    height: 1000px;
+    width: 1105px;
+    padding: auto;
+    margin: auto;
+}
+
+.warehouse_cards {
+    border: 3px solid #dcdbdc;
+    border-radius: 20px;
+    width: 1100px;
+    height: 260px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 30px;
+}
+
+.data_image {
+    border-top-left-radius: 20px;
+    width: 75%;
+    height: 200px;
+    display: inline-block;
+}
+
+.sell {
+    border: 3px solid #dcdbdc;
+    border-radius: 20px;
+    width: 25%;
+    height: 260px;
+    display: inline-block;
+    position: relative;
+    right: -824px;
+    top: -256px;
+}
+
+.product_img {
+    border-radius: 20px;
+    display: inline-block;
+    margin: 15px;
+    margin-right: 5px;
+}
+
+.data {
+    top: 15px;
+    margin-left: 20px;
+    margin-top: 5px;
+    display: inline-block;
+    width: 560px;
+    height: 180px;
+    display: inline-block;
+    position: relative;
+    top: -15px;
+}
+
+.type_sell {
+    font-size: 12px;
+    color: #afafaf;
+    line-height: 1;
+}
+
+.name_sell {
+    font-weight: 700;
+    line-height: 3;
+    font-size: 16px;
+}
+
+.adres {
+    background-color: #efefef;
+    border-radius: 5px;
+    color: #787878;
+    line-height: 2;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.seller_property {
+    color: #afafaf;
+    line-height: 2;
+}
+
+.view_sell {
+    background-color:#efefef;
+    width: 140px;
+    height: 40px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.typeOfProduct {
+    color: #787878;
+}
+
+.description {
+    margin-top: 10px;
+}
+
+.data_dell {
+    margin: 15px;
+}
+
+.price {
+    font-size: 18px;;
+    font-weight: 700;
+    line-height: 2;
+}
+
+.parametr {
+    margin-top: 10px;
+    line-height: 0.8;
+}
+
+.parametr_left {
+    display: inline-block;
+    width: 160px;
+}
+
+.parametr_right, .per-piece{
+    text-align: right;
+    display: inline-block;
+    width: 71px;
+}
+
+.buttonAction {
+    margin-top: 100px;
+    height: 50px;
+    
+}
+
+.buttonAction button {
+    background-color: #efefef;
+    border: none;
+    border-radius: 12px;
+    height: 50px;  
+    color: #4f3179;
+    font-weight: 700;
+}
+
+.butAdd {
+    width: 170px;
+}
+
+.butAdd:hover {
+    background-color: #e6e6e6;
+}
+
+.butAdd:focus {
+    background-color: #4f3179;
+    color: white;
+}
+
+.like {
+    width: 50px;
+    margin-left: 16px;
+}
+
+.like:hover {
+    background-color: #e6e6e6;
+}
+
+.like:focus {
+    background-color: #4f3179;
+    color: white;
+}

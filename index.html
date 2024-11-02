@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Магазин стройматериалов</title>
+    <link href="styles.css" rel="stylesheet">
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+</head>
+<body>
+    <header>
+        <div id="sections">
+            <button id="favorites-button">
+                <img width="15px" src="img\free-icon-heart-shape-outline-25424.png">
+                <div>Избранное</div>
+            </button>
+            <button id="warehouse-button" class="active">
+                <img width="15px" src="img\free-icon-big-box-81227.png">
+                <div>Склад</div>
+            </button>
+            <button id="deals-button">
+                <img width="15px" src="img\free-icon-shopping-bag-481382.png">
+                <div>Сделки</div>
+            </button>
+        </div>
+
+        <div id="types-sell">
+            <button id="all">Все типы</button>
+            <button id="direct-sales">Прямые продажи</button>
+            <button id="auction">Акция</button>
+        </div>
+
+        <input type="text" id="search" placeholder="Поиск по названию" />
+</header>
+    </header>
+    
+    <div id="favorites" class="section"></div>
+    <div id="warehouse" class="section"></div>
+    <div id="deals" class="section"></div>
+    
+    
+    <template id="card-template">
+        <div class="warehouse_cards" data-type="Разовая продажа">
+            <div class="data_image">
+                <img src="img/1.jpg" height="220px" width="200px" class="product_img">
+                <div class="data">
+                    <span class="type_sell">Разовая продажа</span><br>
+                    <span class="name_sell">Пиломатериалы брус доска</span><br>
+                    <span class="adres"><img src="img/location.svg" style="opacity: 0.8;" height="13px"> <span class="controlAdres">Санкт-Петербург, Красное село</span></span><br>
+                    <span class="seller_property">Продавец</span> 
+                    <span class="seller_value">Торговый дом ГОСТ</span><br>
+                    <div class="view_sell"><span class="typeOfProduct">Вид товара</span><br>Стройматериалы<br></div>
+                    <div class="description">Пиломатериалы брус доска. Распродажа Пиломатериалов в связи с закрытием ЛЕСО-БАЗЫ!</div>
+                </div>
+            </div>
+            <div class="sell">
+                <div class="data_dell">
+                    <span class="price">33 000 ₽</span>
+                    <div class="parametr">
+                        <div class="parametr_number">
+                            <span class="parametr_left">Количество</span> 
+                            <span class="parametr_right"><span class="quantity">3</span> шт.</span>
+                        </div><br>
+                        <div class="costPerPiece">
+                            <span class="parametr_left">Стоимость за штуку</span> 
+                            <span class="per-piece">11 000 ₽</span>
+                        </div>
+                    </div>
+                    <div class="buttonAction">
+                        <button class="butAdd sell_button">Добавить в сделки</button>
+                        <button class="like sell_button">&#10084;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+    
+    <script>
+        const types = [
+            { type: "Акция", quatity: "3", unitprice: "11 000 ₽", price: "33 000 ₽", name: "Пиломатериалы брус доска", img: "img/1.jpg", adres: "Санкт-Петербург, Красное село", seller: "Торговый дом ГОСТ", descrip: "Пиломатериалы брус доска. Распродажа Пиломатериалов в связи с закрытием ЛЕСО-БАЗЫ!"},
+            { type: "Разовая продажа", quatity: "2", unitprice: "500 ₽", price: "1 000 ₽", name: "Доска обрезная", img: "img/2.jpg", adres: "Москва, Курьяново", seller: "Стройляндия", descrip: "Изготовленная из натурального дерева, доска обладает высокой прочностью и долговечностью, что делает ее идеальным выбором для создания надежных и устойчивых конструкций."},
+            { type: "Акция", quatity: "10", unitprice: "7 300 ₽", price: "73 000 ₽", name: "Ламинированный брус", img: "img/3.jpg", adres: "Казань", seller: "Торговый дом ГОСТ", descrip: "Улучшите свой дом с нашим ламинированным брусом! Прочный и стильный, он обеспечит естественную красоту и долговечность вашему жилищу."},
+            { type: "Разовая продажа",  quatity: "7", unitprice: "2 000 ₽", price: "14 000 ₽", name: "Фанера ОСБ", img: "img/4.jpg", adres: "Омск", seller: "Строительный БУМ", descrip: "Идеально подходит для создания конструкций, требующих надежности и долговечности."},
+            { type: "Разовая продажа", quatity: "3", unitprice: "22 010 ₽", price: "66 030 ₽", name: "Кровельные материалы", img: "img/5.jpg", adres: "Орск", seller: "Строительный БУМ", descrip: "Металлочерепица — это идеальный выбор для тех, кто ищет надежный, долговечный и эстетически привлекательный кровельный материал. "},
+            { type: "Акция", quatity: "30", unitprice: "300 ₽", price: "9 000 ₽", name: "Рулонный кровельный материал", img: "img/6.jpg", adres: "Санкт-Петербург", seller: "Стройляндия", descrip: "Предназначен для крыш со сроком эксплуатации не более 5 лет. Изделие укладывается на основание при помощи битума или кровельных мастик."},
+            { type: "Разовая продажа", quatity: "1", unitprice: "2 100 ₽", price: "2 100 ₽", name: "Клей для плитки", img: "img/7.jpg", adres: "Нижний новгород", seller: "СтройЭконом", descrip: "уникальная система армирующих волокон, которая в зависимости от типа состава и выполняемых задач, подбирается индивидуально."},
+            { type: "Акция", quatity: "12", unitprice: "222 ₽", price: "2 664 ₽", name: "Шпаклевка гипсовая", img: "img/8.jpg", adres: "Москва", seller: "Строительный БУМ", descrip: "Используется для укладки тяжелых крупноформатных плит и плит среднего формата искусственного камня при проведении внутренних и наружных работ."},
+            { type: "Разовая продажа", quatity: "10", unitprice: "3 220 ₽", price: "32 200 ₽", name: "Грунтовка ЦЕРЕЗИТ", img: "img/9.jpg", adres: "Санкт-Петербург, Дюны село", seller: "Стройляндия", descrip: "Грунтовка CT 17 предназначена для обработки поверхностей перед нанесением штукатурных и напольных смесей,плиточных клеев и т.д."},
+            { type: "Акция", quatity: "5", unitprice: "5 000 ₽", price: "25 000 ₽", name: "Клей для плитки ЦЕРЕЗИТ", img: "img/10.jpg", adres: "Казань", seller: "СтройЭконом", descrip: "Клей для плитки ЦЕРЕЗИТ Plus/PRO CM11 25 кг - водостойкий и морозостойкий, подходит для влажных зон, экологически безопасен. "},
+            { type: "Акция", quatity: "10", unitprice: "300 ₽", price: "3 000 ₽", name: "Песок строительный", img: "img/11.jpg", adres: "Нижний Новгород", seller: "Стройляндия", descrip: "Этот строительный песок обладает оптимальной фракцией, которая делает его идеальным для использования в различных стройпроектах."},
+            { type: "Разовая продажа", quatity: "20", unitprice: "750 ₽", price: "15 000 ₽", name: "Арматура композитная стеклопластиковая", img: "img/12.jpg", adres: "Нижний Новгород", seller: "Торговый дом ГОСТ", descrip: " Очень устойчива к коррозии, отлично противостоит воздействию кислой, щелочной и соленой сред."},
+            { type: "Акция", quatity: "21",  unitprice: "201 ₽", price: "4 221 ₽", name: "Арматура металлическая рифленая", img: "img/13.jpg", adres: "Санкт-Петербург, Никольское село", seller: "Строительный БУМ", descrip: "Арматура подойдет для изготовления ворот или калитки любой формы и размера, благодаря тому, что арматура отлично гнется и сваривается."}
+        ];
+    
+        const template = document.getElementById("card-template");
+        const warehouseSection = document.getElementById("warehouse");
+        const favoritesSection = document.getElementById("favorites");
+        const dealsSection = document.getElementById("deals");
+        const warehouseButton = document.getElementById("warehouse-button");
+        const favoritesButton = document.getElementById("favorites-button");
+        const dealsButton = document.getElementById("deals-button");
+    
+    
+        const showSection = (sectionId) => {
+            document.querySelectorAll('.section').forEach(section => section.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'block';
+    
+            document.querySelectorAll('#sections button').forEach(button => button.classList.remove('active'));
+            document.getElementById(`${sectionId}-button`).classList.add('active');
+        }
+    
+        types.forEach(({ type, name, img, adres, seller, descrip, unitprice, quatity, price }) => {
+            const templateClone = document.importNode(template.content, true);
+            const card = templateClone.querySelector(".warehouse_cards");
+            card.setAttribute("data-type", type);
+            card.querySelector(".type_sell").textContent = type;
+            card.querySelector(".name_sell").textContent = name;
+            card.querySelector(".controlAdres").textContent = adres;
+            card.querySelector(".seller_value").textContent = seller;
+            card.querySelector(".per-piece").textContent = unitprice;
+            card.querySelector(".description").textContent = descrip;
+            card.querySelector(".quantity").textContent = quatity;
+            card.querySelector(".price").textContent = price;
+            card.querySelector(".product_img").setAttribute("src", img);
+            warehouseSection.appendChild(templateClone);
+    
+            //Изменение стилей для кнопки .butAdd
+            card.querySelector(".butAdd").addEventListener("click", () => {
+                const clonedCard = card.cloneNode(true);
+                dealsSection.appendChild(clonedCard);
+                const payButton = clonedCard.querySelector(".butAdd");
+                card.querySelector(".butAdd").style.backgroundColor = "#312470";
+                clonedCard.querySelector(".butAdd").style.backgroundColor = "green";
+                card.querySelector(".butAdd").style.color = "white";
+                clonedCard.querySelector(".butAdd").style.color = "white";
+                clonedCard.querySelector(".butAdd").textContent = "Оплатить";
+                payButton.addEventListener("click", () => {
+                    clonedCard.querySelector(".butAdd").textContent = "Оплачено";
+                    clonedCard.querySelector(".butAdd").style.backgroundColor = "white";
+                    clonedCard.querySelector(".butAdd").style.color = "#9894a9";
+                    clonedCard.querySelector(".butAdd").style.border = "1px solid #9894a9";
+                    clonedCard.querySelector(".butAdd").setAttribute("disables", true);
+                })
+                
+    
+                // Удаление обработчиков событий после перемещения
+                clonedCard.querySelector(".butAdd").removeEventListener("click", arguments.callee);
+                clonedCard.querySelector(".like").removeEventListener("click", card.querySelector(".like")._clickListener);
+    
+            });
+            
+            //Изменение стилей для кнопки .like
+            card.querySelector(".like").addEventListener("click", () => {
+                const clonedCard = card.cloneNode(true);
+                favoritesSection.appendChild(clonedCard);
+                card.querySelector(".like").style.backgroundColor = "#312470";
+                clonedCard.querySelector(".like").style.backgroundColor = "#312470";
+                card.querySelector(".like").style.color = "white";
+                clonedCard.querySelector(".like").style.color = "white";
+
+    
+                // Удаление обработчиков событий после перемещения
+                clonedCard.querySelector(".butAdd").removeEventListener("click", card.querySelector(".butAdd")._clickListener);
+                clonedCard.querySelector(".like").removeEventListener("click", arguments.callee);
+            });
+        });
+    
+        showSection('warehouse'); // Показать склад по умолчанию
+    
+        warehouseButton.addEventListener('click', () => showSection('warehouse'));
+        favoritesButton.addEventListener('click', () => showSection('favorites'));
+        dealsButton.addEventListener('click', () => showSection('deals'));
+
+        // Функция фильтрации карточек
+    function filterCards(type) {
+        const cards = document.querySelectorAll(".warehouse_cards");
+        cards.forEach(card => {
+            if (type === "Все типы" || card.getAttribute("data-type") === type) {
+                card.style.display = "block";
+
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    // Функция поиска по названию
+    function searchCards() {
+        const query = document.getElementById("search").value.toLowerCase();
+        const cards = document.querySelectorAll(".warehouse_cards");
+        cards.forEach(card => {
+            const nameSell = card.querySelector(".name_sell").textContent.toLowerCase();
+            if (nameSell.includes(query)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    // Обработчики событий для кнопок
+    document.getElementById("all").addEventListener("click", () => filterCards("Все типы"));
+    document.getElementById("direct-sales").addEventListener("click", () => filterCards("Разовая продажа"));
+    document.getElementById("auction").addEventListener("click", () => filterCards("Акция"));
+
+    // Обработчик для поля поиска
+    document.getElementById("search").addEventListener("input", searchCards);
+
+    // Изначально показываем все карточки
+    filterCards("Все типы");
+    
+    
+    </script>
+</body>
+</html>
+
